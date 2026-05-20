@@ -17,7 +17,7 @@ requires-python = ">=3.12"
 readme = "README.md"
 license = "ISC"
 license-files = ["LICENSE"]
-dynamic = ["version"]
+dynamic = ["version", "urls"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -43,6 +43,12 @@ docs = [
 
 [tool.hatch.version]
 source = "vcs"
+
+[tool.hatch.metadata.hooks.vcs.urls]
+Documentation = "https://docs.nicebots.xyz/github-webhook-types/"
+Repository = "https://github.com/nicebots-xyz/github-webhook-types"
+Issues = "https://github.com/nicebots-xyz/github-webhook-types/issues"
+"Source Archive" = "https://github.com/nicebots-xyz/github-webhook-types/archive/{commit_hash}.zip"
 
 [tool.hatch.build.hooks.vcs]
 version-file = "src/github_webhook_types/_version.py"
