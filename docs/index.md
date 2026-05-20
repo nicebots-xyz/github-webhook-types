@@ -6,7 +6,7 @@ Copyright: 2026 NiceBots.xyz
 
 `github-webhook-types` provides generated Python types for GitHub webhook payloads.
 
-The generated modules are built from Octokit's machine-readable webhook schema. The repository commits generated Python code and source metadata, but it does not vendor the Octokit schema JSON.
+The generated modules are built from [`@octokit/openapi-webhooks`](https://github.com/octokit/openapi-webhooks), derived from GitHub's official OpenAPI description. The repository commits generated Python code and source metadata, but it does not vendor the upstream schema JSON.
 
 ## Install
 

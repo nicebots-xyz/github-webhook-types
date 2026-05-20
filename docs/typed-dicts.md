@@ -11,7 +11,7 @@ Generated `TypedDict` payload classes are the canonical reference for webhook pa
     For example, `IssuesOpenedPayloadDict` is available as `IssuesOpenedPayload` from
     `github_webhook_types.generated.models`.
 
-    Pydantic models are built from these generated `TypedDict` definitions at runtime and allow unknown
+    Pydantic models mirror these generated `TypedDict` definitions field-for-field and allow unknown
     extra fields, matching GitHub's ability to add webhook fields over time.
 
 ::: github_webhook_types.generated.typed_dicts

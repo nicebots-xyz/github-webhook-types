@@ -33,8 +33,8 @@ from github_webhook_types import parse_delivery
 model = parse_delivery("push", request_body)
 ```
 
-Generated Pydantic models are built from the generated `TypedDict` definitions and allow unknown extra fields
-because GitHub can add payload fields over time.
+Generated Pydantic models mirror the generated `TypedDict` definitions field-for-field and allow unknown
+extra fields because GitHub can add payload fields over time.
 
 !!! note
     The `TypedDict` reference is the canonical field reference. Pydantic model names use the same payload name
