@@ -30,11 +30,11 @@ keywords = ["github", "webhooks", "types", "typeddict", "pydantic"]
 
 [dependency-groups]
 dev = [
-    "basedpyright~=1.18.3",
-    "ruff~=0.6.9",
+    "basedpyright~=1.39.5",
+    "ruff~=0.15.13",
 ]
 test = [
-    "pytest~=8.2.2",
+    "pytest~=9.0.3",
 ]
 docs = [
     "mkdocstrings[python]~=1.0.3",
