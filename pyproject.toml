@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: ISC
 # Copyright: 2026 NiceBots.xyz
 [build-system]
-requires = ["hatchling", "hatch-vcs"]
+requires = ["hatchling~=1.27.0", "hatch-vcs~=0.5.0"]
 build-backend = "hatchling.build"
 
 [project]
@@ -11,7 +11,7 @@ authors = [
     { name = "Paillat-dev", email = "me@paillat.dev" },
 ]
 dependencies = [
-    "pydantic>=2",
+    "pydantic~=2.0",
 ]
 requires-python = ">=3.12"
 readme = "README.md"
@@ -30,15 +30,15 @@ keywords = ["github", "webhooks", "types", "typeddict", "pydantic"]
 
 [dependency-groups]
 dev = [
-    "basedpyright>=1.18.3",
-    "ruff>=0.6.9",
+    "basedpyright~=1.18.3",
+    "ruff~=0.6.9",
 ]
 test = [
-    "pytest>=8.2.2",
+    "pytest~=8.2.2",
 ]
 docs = [
-    "mkdocstrings[python]>=1.0.3",
-    "zensical>=0.0.24",
+    "mkdocstrings[python]~=1.0.3",
+    "zensical~=0.0.24",
 ]
 
 [tool.hatch.version]
