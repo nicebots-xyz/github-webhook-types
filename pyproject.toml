@@ -127,5 +127,6 @@ convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
 "scripts/**" = ["C901", "PLR0911", "S310", "S603", "T201"]
+"scripts/templates/generated_module.py" = ["D415"]
 "src/github_webhook_types/generated/*.py" = ["A003", "E501", "N801", "N815"]
 "tests/*" = ["S101"]

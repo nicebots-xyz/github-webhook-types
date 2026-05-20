@@ -1,6 +1,9 @@
 # SPDX-License-Identifier: ISC
 # Copyright: 2026 NiceBots.xyz
-"""Octokit schema metadata used for the generated payload types."""
+"""Octokit schema metadata used for the generated payload types.
+
+Do not edit this module by hand. Run `pdm run generate` instead.
+"""
 
 SCHEMA_URL = "https://unpkg.com/@octokit/webhooks-schemas/schema.json"
 EXAMPLES_URL = "https://unpkg.com/@octokit/webhooks-examples/api.github.com/index.json"

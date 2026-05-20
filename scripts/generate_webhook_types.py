@@ -22,6 +22,7 @@ from urllib.request import Request, urlopen
 ROOT: Final = Path(__file__).resolve().parents[1]
 PACKAGE: Final = ROOT / "src" / "github_webhook_types"
 GENERATED: Final = PACKAGE / "generated"
+GENERATED_MODULE_TEMPLATE: Final = ROOT / "scripts" / "templates" / "generated_module.py"
 SCHEMA_URL: Final = "https://unpkg.com/@octokit/webhooks-schemas/schema.json"
 EXAMPLES_URL: Final = "https://unpkg.com/@octokit/webhooks-examples/api.github.com/index.json"
 SCHEMA_PACKAGE: Final = "@octokit/webhooks-schemas"
@@ -312,48 +313,58 @@ def normalize_source(path: Path, source: str) -> str:
 
 def render_generated_init() -> str:
     """Render the generated package init module."""
-    return '''"""Generated GitHub webhook payload types and registries."""
-
-from github_webhook_types.generated.events import EVENT_MODEL_BY_NAME, EVENT_TYPED_DICT_BY_NAME, GitHubEventName
-from github_webhook_types.generated.models import WebhookPayloadModel
-from github_webhook_types.generated.typed_dicts import WebhookPayload
-
-__all__ = [
-    "EVENT_MODEL_BY_NAME",
-    "EVENT_TYPED_DICT_BY_NAME",
-    "GitHubEventName",
-    "WebhookPayload",
-    "WebhookPayloadModel",
-]
-'''
+    lines = generated_header("Generated GitHub webhook payload types and registries.")
+    lines.extend(
+        [
+            "from github_webhook_types.generated.events import (",
+            "    EVENT_MODEL_BY_NAME,",
+            "    EVENT_TYPED_DICT_BY_NAME,",
+            "    GitHubEventName,",
+            ")",
+            "from github_webhook_types.generated.models import WebhookPayloadModel",
+            "from github_webhook_types.generated.typed_dicts import WebhookPayload",
+            "",
+            "__all__ = [",
+            '    "EVENT_MODEL_BY_NAME",',
+            '    "EVENT_TYPED_DICT_BY_NAME",',
+            '    "GitHubEventName",',
+            '    "WebhookPayload",',
+            '    "WebhookPayloadModel",',
+            "]",
+        ],
+    )
+    return "\n".join(lines)
 
 
 def render_schema_meta(schema_source: Source, examples_source: Source) -> str:
     """Render schema metadata."""
-    return f'''"""Octokit schema metadata used for the generated payload types."""
-
-SCHEMA_URL = {SCHEMA_URL!r}
-EXAMPLES_URL = {EXAMPLES_URL!r}
-SCHEMA_PACKAGE = {SCHEMA_PACKAGE!r}
-EXAMPLES_PACKAGE = {EXAMPLES_PACKAGE!r}
-SCHEMA_VERSION = {schema_source.version!r}
-EXAMPLES_VERSION = {examples_source.version!r}
-SCHEMA_SHA256 = {schema_source.sha256!r}
-EXAMPLES_SHA256 = {examples_source.sha256!r}
-GENERATOR_VERSION = {GENERATOR_VERSION!r}
-
-__all__ = [
-    "EXAMPLES_PACKAGE",
-    "EXAMPLES_SHA256",
-    "EXAMPLES_URL",
-    "EXAMPLES_VERSION",
-    "GENERATOR_VERSION",
-    "SCHEMA_PACKAGE",
-    "SCHEMA_SHA256",
-    "SCHEMA_URL",
-    "SCHEMA_VERSION",
-]
-'''
+    lines = generated_header("Octokit schema metadata used for the generated payload types.")
+    lines.extend(
+        [
+            f"SCHEMA_URL = {SCHEMA_URL!r}",
+            f"EXAMPLES_URL = {EXAMPLES_URL!r}",
+            f"SCHEMA_PACKAGE = {SCHEMA_PACKAGE!r}",
+            f"EXAMPLES_PACKAGE = {EXAMPLES_PACKAGE!r}",
+            f"SCHEMA_VERSION = {schema_source.version!r}",
+            f"EXAMPLES_VERSION = {examples_source.version!r}",
+            f"SCHEMA_SHA256 = {schema_source.sha256!r}",
+            f"EXAMPLES_SHA256 = {examples_source.sha256!r}",
+            f"GENERATOR_VERSION = {GENERATOR_VERSION!r}",
+            "",
+            "__all__ = [",
+            '    "EXAMPLES_PACKAGE",',
+            '    "EXAMPLES_SHA256",',
+            '    "EXAMPLES_URL",',
+            '    "EXAMPLES_VERSION",',
+            '    "GENERATOR_VERSION",',
+            '    "SCHEMA_PACKAGE",',
+            '    "SCHEMA_SHA256",',
+            '    "SCHEMA_URL",',
+            '    "SCHEMA_VERSION",',
+            "]",
+        ],
+    )
+    return "\n".join(lines)
 
 
 def render_typed_dicts(payloads: Sequence[Payload]) -> str:
@@ -469,13 +480,8 @@ def render_events(payloads: Sequence[Payload]) -> str:
 
 def generated_header(doc: str) -> list[str]:
     """Return a generated module header."""
-    return [
-        f'"""{doc}',
-        "",
-        "Do not edit this module by hand. Run `pdm run generate` instead.",
-        '"""',
-        "",
-    ]
+    header = GENERATED_MODULE_TEMPLATE.read_text(encoding="utf-8").format(doc=doc)
+    return [*header.rstrip().splitlines(), ""]
 
 
 def render_union_alias(name: str, members: Sequence[str], *, fallback: str) -> str:
