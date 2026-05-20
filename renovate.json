@@ -13,5 +13,6 @@
   ],
   "lockFileMaintenance": {
     "enabled": true
-  }
+  },
+  "semanticCommits": "enabled"
 }
