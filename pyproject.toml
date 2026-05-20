@@ -1,0 +1,131 @@
+# SPDX-License-Identifier: ISC
+# Copyright: 2026 NiceBots.xyz
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "github-webhook-types"
+description = "TypedDict and Pydantic models for GitHub webhook payloads."
+authors = [
+    { name = "Paillat-dev", email = "me@paillat.dev" },
+]
+dependencies = [
+    "pydantic>=2",
+]
+requires-python = ">=3.12"
+readme = "README.md"
+license = "ISC"
+license-files = ["LICENSE"]
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: ISC License (ISCL)",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
+]
+keywords = ["github", "webhooks", "types", "typeddict", "pydantic"]
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.18.3",
+    "ruff>=0.6.9",
+]
+test = [
+    "pytest>=8.2.2",
+]
+docs = [
+    "mkdocstrings[python]>=1.0.3",
+    "zensical>=0.0.24",
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/github_webhook_types/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/github_webhook_types"]
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.scripts]
+format = "ruff format ."
+"format:check" = "ruff format --check ."
+lint = "ruff check ."
+typecheck = "basedpyright src tests scripts"
+tests = "pytest tests"
+generate = "python scripts/generate_webhook_types.py"
+"generate:check" = "python scripts/generate_webhook_types.py --check"
+"docs:build" = "zensical build --clean"
+"docs:preview" = "python -m http.server 8000 -d site"
+"docs:dev" = "zensical serve"
+quality = { composite = ["format:check", "lint", "typecheck", "generate:check", "tests"] }
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+typeCheckingMode = "strict"
+reportAny = false
+reportUnusedCallResult = false
+reportUnknownMemberType = false
+reportMissingTypeStubs = false
+pythonVersion = "3.12"
+
+[[tool.pyright.executionEnvironments]]
+root = "src/github_webhook_types/_version.py"
+reportDeprecated = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "network: tests that fetch live Octokit webhook data",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+indent-width = 4
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+
+[tool.ruff.lint]
+select = ["ALL"]
+extend-ignore = [
+    "ANN401",
+    "COM812",
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D107",
+    "D203",
+    "D211",
+    "D213",
+    "EM101",
+    "EM102",
+    "ISC001",
+    "PLR2004",
+    "TRY003",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/**" = ["C901", "PLR0911", "S310", "S603", "T201"]
+"src/github_webhook_types/generated/*.py" = ["A003", "E501", "N801", "N815"]
+"tests/*" = ["S101"]

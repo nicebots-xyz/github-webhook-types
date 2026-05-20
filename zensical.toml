@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: ISC
+# Copyright: 2026 NiceBots.xyz
+[project]
+site_name = "github-webhook-types"
+site_description = "TypedDict and Pydantic models for GitHub webhook payloads"
+site_url = "https://docs.nicebots.xyz/github-webhook-types/"
+repo_url = "https://github.com/nicebots-xyz/github-webhook-types"
+repo_name = "nicebots-xyz/github-webhook-types"
+copyright = "ISC License"
+
+nav = [
+  { "Home" = "index.md" },
+  { "Usage" = "usage.md" },
+  { "Delivery Headers" = "delivery.md" },
+  { "TypedDict Reference" = "typed-dicts.md" },
+  { "API Reference" = "api.md" },
+]
+
+[project.theme]
+variant = "modern"
+features = [
+  "navigation.footer",
+]
+
+[project.theme.icon]
+logo = "lucide/webhook"
+
+[[project.theme.palette]]
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+primary = "teal"
+accent = "amber"
+
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+primary = "indigo"
+accent = "teal"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/nicebots-xyz/github-webhook-types"
+name = "github-webhook-types on GitHub"
+
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.superfences]
+
+[project.plugins.mkdocstrings.handlers.python]
+paths = ["src"]
+
+[project.plugins.mkdocstrings.handlers.python.options]
+docstring_style = "google"
+show_source = true
+show_signature_annotations = true
+show_root_heading = true
+show_root_full_path = false
+heading_level = 3
+members_order = "source"

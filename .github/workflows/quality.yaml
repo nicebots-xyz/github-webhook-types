@@ -1,0 +1,35 @@
+name: Quality Checks
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          cache: true
+          python-version-file: "pyproject.toml"
+
+      - name: Install dependencies
+        run: pdm install --frozen-lockfile -G dev -G test -G docs
+
+      - name: Format Check
+        run: pdm run format:check
+
+      - name: Lint Check
+        run: pdm run lint
+
+      - name: Type Check
+        run: pdm run typecheck
+
+      - name: Generated Files Check
+        run: pdm run generate:check
+
+      - name: Tests
+        run: pdm run tests
