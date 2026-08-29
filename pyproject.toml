@@ -31,7 +31,7 @@ keywords = ["github", "webhooks", "types", "typeddict", "pydantic"]
 [dependency-groups]
 dev = [
     "basedpyright~=1.39.5",
-    "ruff~=0.15.13",
+    "ruff~=0.16.5",
 ]
 test = [
     "pytest~=9.0.3",
