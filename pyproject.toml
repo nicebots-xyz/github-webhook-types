@@ -34,7 +34,7 @@ dev = [
     "ruff~=0.15.13",
 ]
 test = [
-    "pytest~=9.0.3",
+    "pytest~=9.1.1",
 ]
 docs = [
     "mkdocstrings[python]~=1.0.3",
